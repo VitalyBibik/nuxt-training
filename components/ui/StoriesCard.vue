@@ -1,36 +1,72 @@
 <template>
-  <div class="stories-card">
-    <img
-      class="stories-card__photoes"
-      src="https://pbs.twimg.com/profile_images/837175195769135104/tQcPpy_m_400x400.jpg"
-      alt=""
-    />
-    <h3 class="stories-card__title">Владимир Тен</h3>
-    <p class="stories-card__subtitle">
-      Я всегда читаю книги с конца, - и это не лечится, в отличие от рака.
-    </p>
+  <div class="stories-card" @click="handleClick">
+    <div class="stories-card__photo-container">
+      <img
+        class="stories-card__photo"
+        :src="url"
+        :alt="`Фото ${story.author}`"
+      />
+    </div>
+
+    <h3 class="stories-card__title">
+      {{ story.author }}
+    </h3>
+    <blockquote class="stories-card__subtitle">
+      {{ story.title }}
+    </blockquote>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    story: Object,
+    url: String,
+  },
+  methods: {
+    handleClick(event) {
+      event.preventDefault();
+      this.$emit('click');
+    },
+  },
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style scoped>
 .stories-card {
+  width: 100%;
   display: inline-block;
   cursor: pointer;
 }
 
-.stories-card__photoes {
-  max-width: 300px;
-  min-height: 300px;
-  margin-bottom: 12px;
+.stories-card__photo-container {
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.stories-card__photo-container::before {
+  content: '';
+  display: block;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.stories-card__photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   background-color: gray;
 }
 
 .stories-card__title {
-  max-width: 300px;
+  width: 100%;
   margin-bottom: 15px;
   font-weight: 600;
   font-size: 22px;
@@ -41,5 +77,32 @@ export default {};
   font-size: 14px;
   line-height: 18px;
   color: #666666;
+}
+
+@media screen and (max-width: 1024px) {
+  .stories-card__title {
+    font-size: 18px;
+  }
+
+  .stories-card__subtitle {
+    max-width: 190px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .stories-card__subtitle {
+    max-width: 200px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .stories-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }
 </style>

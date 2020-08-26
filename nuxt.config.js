@@ -15,7 +15,7 @@ export default {
       },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/static/images/favicon.ico' },
       { rel: 'stylesheet', href: '/fonts/fonts.css' },
     ],
   },
@@ -30,7 +30,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    {
+      src: '~/plugins/route.js',
+    },
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -47,7 +51,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'https://strapi.kruzhok.io',
+  },
   /*
    ** Build configuration
    */
@@ -56,5 +62,8 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
+  },
+  env: {
+    apiURL: 'https://strapi.kruzhok.io',
   },
 };
